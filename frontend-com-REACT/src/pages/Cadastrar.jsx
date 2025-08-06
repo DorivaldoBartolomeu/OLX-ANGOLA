@@ -5,14 +5,18 @@ import Sigin from "../assest/signin.gif";
 import { FaEye } from "react-icons/fa6";
 import { CiAt } from "react-icons/ci";
 import { IoPerson } from "react-icons/io5";
+import ImageTobase from "../helpers/imageTobase";
+
 
 const Cadastrar = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [data, setData] = useState({
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
+    profilePic : ""
   });
 
   const handleChange = (e) => {
@@ -23,24 +27,51 @@ const Cadastrar = () => {
     }));
   };
 
+  const handleUploadPic = async (e) => {
+    const file = e.target.files[0];
+
+    const imagePic = await ImageTobase(file);
+    
+    setData((prev) => ({
+      ...prev,
+      profilePic: imagePic,
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Dados do form", data);
   };
-
+  
   // const [showPassword, setShowPassword] = useState(false); // Removed duplicate
  return (
      <section id="login">
        <div className="mx-auto my-7 container p-4">
          <div className="max-w-sm p-4 bg-white mx-auto rounded-lg shadow-lg">
-           <div className="w-20 y-20 mx-auto">
-             <img src={Sigin} alt="Login" className="rounded-full" />
+           <div className="w-20 y-20 mx-auto relative rounded-full overflow-hidden">
+             <div>
+              <img src={data.profilePic || Sigin} alt="Login" className="rounded-full" />
+             </div>
+             <form action="">
+              <label htmlFor="profile-pic" className="cursor-pointer">
+                <div className="text-center font-bold text-xs bg-slate-100 absolute bottom-0 left-0 right-0 w-full py-8 bg-opacity-75 cursor-pointer">
+                  Carregar foto
+                </div>
+              </label>
+              <input
+                type="file"
+                id="profile-pic"
+                name="profilePic"
+                onChange={handleUploadPic}
+                className="hidden"
+              />
+             </form>
            </div>
  
-           <form className="pt-6" onSubmit={handleSubmit}>
+           <form className="pt-6 flex flex-col gap-2" onSubmit={handleSubmit}>
              <div>
                <label htmlFor="email">Nome:</label>
-                <div className="bg-slate-100 p-2 my-2 flex justify-between items-center ">
+                <div className="bg-slate-100 p-2 flex justify-between items-center ">
                   <input
 
                     type="text"
@@ -59,7 +90,7 @@ const Cadastrar = () => {
                </div>
              <div>
                <label htmlFor="email">Email:</label>
-               <div className="bg-slate-100 p-2 my-2 flex justify-between items-center ">
+               <div className="bg-slate-100 p-2 flex justify-between items-center ">
                  <input
 
                    type="email"
@@ -78,7 +109,7 @@ const Cadastrar = () => {
              </div>
              <div>
                <label htmlFor="password">Senha:</label>
-               <div className="bg-slate-100 p-2 my-2 flex justify-between items-center ">
+               <div className="bg-slate-100 p-2 flex justify-between items-center ">
                  <input
 
                    type={showPassword ? "text" : "password"}
@@ -101,7 +132,7 @@ const Cadastrar = () => {
                </div>
              <div>
                <label htmlFor="password">Confirmar senha:</label>
-               <div className="bg-slate-100 p-2 my-2 flex justify-between items-center ">
+               <div className="bg-slate-100 p-2 flex justify-between items-center ">
                  <input
 
                    type={showConfirmPassword ? "text" : "password"}
@@ -121,21 +152,11 @@ const Cadastrar = () => {
                    {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
                  </span>
                </div>
- 
-               <small className="flex justify-between items-center my-4">
-                 <div className="flex items-center">
-                   <p>Lembre-se de mim</p>
-                   <input
-                     type="checkbox" className="mx-2 accent-red-500 cursor-pointer" />
-                 </div>
-                 
-               </small>
- 
-               <div className="mx-auto flex flex-col items-center">
-                 <button className=" bg-red-500 text-white font-bold px-14 py-2 mx-auto rounded-full my-2 hover:bg-red-600 hover:scale-105 transition-all duration-300">
+               <div className="mx-auto my-4 flex flex-col items-center">
+                 <button className=" bg-red-500 text-white font-bold px-14 py-2 mx-auto rounded-full hover:bg-red-600 hover:scale-105 transition-all duration-300">
                    Cadastrar
                  </button>
-     focus:b-            </div>
+               </div>
              </div>
            </form>
            <small className="text-center">

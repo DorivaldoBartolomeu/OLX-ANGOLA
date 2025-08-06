@@ -35,10 +35,10 @@ const Entrar = () => {
             <img src={Sigin} alt="Login" className="rounded-full" />
           </div>
 
-          <form className="pt-6" onSubmit={handleSubmit}>
+          <form className="pt-6 flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="grid">
               <label htmlFor="email">Email:</label>
-              <div className="bg-slate-100 p-2 flex justify-between items-center rounded-full">
+              <div className="bg-slate-100 p-2 flex justify-between items-center border active :border-red-500">
                 <input
                   type="email"
                   id="email"
@@ -56,7 +56,7 @@ const Entrar = () => {
             </div>
             <div className="grid">
               <label htmlFor="password">Senha:</label>
-              <div className="bg-slate-100 p-2 flex justify-between items-center rounded-full">
+              <div className="bg-slate-100 p-2 flex justify-between items-center">
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
@@ -92,7 +92,7 @@ const Entrar = () => {
                 </p>
               </small>
 
-              <div className="mx-auto flex flex-col items-center">
+              <div className="mx-auto my-4 flex flex-col items-center">
                 <button className=" bg-red-500 text-white font-bold px-14 py-2 mx-auto rounded-full hover:bg-red-600 hover:scale-105 transition-all duration-300">
                   Entrar
                 </button>
